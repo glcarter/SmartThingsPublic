@@ -43,7 +43,7 @@ preferences {
 def selectButton() {
 	dynamicPage(name: "selectButton", title: "First, select your button device", nextPage: "configureButton1", uninstall: configured()) {
 		section {
-			input "buttonDevice", "capability.button", title: "Button", multiple: false, required: true
+			input "buttonDevice", "capability.button", title: "Button", multiple: true, required: true
 		}
 
 		section(title: "More options", hidden: hideOptionsSection(), hideable: true) {
@@ -74,6 +74,9 @@ def configureButton1() {
 	createPage(1)
 }
 def configureButton2() {
+	state.numButton = buttonDevice.currentState("numberOfButtons")?.longValue ?: 4
+	log.debug "state variable numButton: ${state.numButton}"
+	state.installCondition = false
 	createPage(2)
 }
 
